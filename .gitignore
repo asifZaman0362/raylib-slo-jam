@@ -1,0 +1,4 @@
+build/
+raylib/web
+raylib/build
+raylib/**/*.a

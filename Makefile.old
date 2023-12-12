@@ -1,0 +1,24 @@
+CC := emcc
+SRC := ./src/*
+RAYLIB_SRC := ./raylib
+RAYLIB_INC := $(RAYLIB_SRC)/include
+RAYLIB_LIB := $(RAYLIB_SRC)/dist
+CFLAGS := -Os -Wall
+BUILD := build
+
+all: game
+
+game: gameobjects
+	$(CC) $(wildcard $(BUILD)/*.o) $(RAYLIB_LIB)/libraylib.a -o $(BUILD)/app
+
+gameobjects:
+	if [ ! -d build ]; then mkdir build; fi
+	$(foreach file, $(wildcard $(SRC)), \
+		$(CC) -c $(CFLAGS) $(file) -I$(RAYLIB_INC) -o $(BUILD)/$(basename $(notdir $(file))).o;)
+
+raylib: $(RAYLIB_INC)/raylib.h $(RAYLIB_INC)/raymath.h \
+	$(RAYLIB_INC)/rcamera.h $(RAYLIB_INC)/rgestures.h \
+	$(RAYLIB_INC)/rlgl.h $(RAYLIB_INC)/utils.h $(RAYLIB_SRC)/dist/libraylib.a
+
+clean:
+	rm -rf build/*
