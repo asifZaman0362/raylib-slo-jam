@@ -1,3 +1,3 @@
 { pkgs ? import <nixpkgs> {} }: pkgs.mkShell {
-  nativeBuildInputs = with pkgs; [ clang-tools gnumake emscripten ];
+  nativeBuildInputs = with pkgs; [ clang-tools gnumake emscripten glfw ];
 }
